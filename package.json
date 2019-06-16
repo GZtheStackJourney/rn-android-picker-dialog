@@ -14,6 +14,14 @@
   ],
   "author": "gzliew",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GZtheStackJourney/rn-android-picker-dialog.git"
+  },
+  "bugs": {
+    "url": "https://github.com/GZtheStackJourney/rn-android-picker-dialog/issues"
+  },
+  "homepage": "https://github.com/GZtheStackJourney/rn-android-picker-dialog",
   "peerDependencies": {
     "react-native": "^0.59.9"
   },
@@ -27,5 +35,6 @@
     "eslint-plugin-jest": "^22.6.4",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.13.0"
-  }
+  },
+  "files": ["android/**/*", "android_gif.gif", "index.js"]
 }
