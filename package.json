@@ -1,0 +1,31 @@
+{
+  "name": "rn-android-picker-dialog",
+  "version": "1.0.0",
+  "description": "dynamic android picker for react native",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react-native",
+    "android",
+    "picker",
+    "pickers"
+  ],
+  "author": "gzliew",
+  "license": "MIT",
+  "peerDependencies": {
+    "react-native": "^0.59.9"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/runtime": "^7.4.5",
+    "babel-jest": "^24.8.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-jest": "^22.6.4",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.13.0"
+  }
+}
