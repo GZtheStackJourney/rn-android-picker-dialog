@@ -1,4 +1,4 @@
-# react-native-test-lib
+# rn-android-picker-dialog
 
 ## Getting started
 
@@ -56,3 +56,6 @@ try {
 |`onOk` | `Array` |
 |`onDismiss` | `null` |
 
+#### Android Screenshot
+
+![](android_gif.gif)
