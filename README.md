@@ -27,29 +27,33 @@
 
 ## Usage
 ```javascript
-import PickerDialog from 'rn-android-picker-dialog';
+import { openDialog } from 'rn-android-picker-dialog';
 
-const inputs = [["00", "01", "02", "03"], ["00", "10", "20", "30", "40", "50"], ["am", "pm"]];
-const selectedValues = [0, 0, 0];
-const dialogTitle = "Select a time";
+const inputs = [["A", "B", "C", "D"]];
+const selectedValues = [0];
+const options = {
+  dialogTitle: "Select a time",
+  sideText: "code"
+}
 
 try {
-    const result = await PickerDialog.showDialog(inputs, selectedValues, dialogTitle);
+    const result = await openDialog(inputs, selectedValues, options);
     console.warn(result);
 } catch (error) {
     console.warn(error.message);        
 }
 ```
 
-### Arguments for PickerDialog.showDialog
+### Arguments for `openDialog`
 
 | Argument                          | Type     | Min | Max | Description      |
 |-----------------------------------|-------------|------|-----|--------------|
 |`Picker values`                      |`Array of array of strings` | `1` | `3`         |values for picker                                                               
 |`Selected values`                       |`Array of integers`       |`1` |`3`          |current selected index in array                                                                
-|`Dialog Title`                       |`String`        |`0` |`20`         |title of dialog
+|`dialogTitle`                       |`String`        |`0` |`20`         |title of dialog
+|`sideText`                       |`String`        |`0` |`20`         |text for one input only
 
-### Return values from PickerDialog.showDialog
+### Return values from `openDialog`
 
 | Action | Value |
 |--------|-------------|
