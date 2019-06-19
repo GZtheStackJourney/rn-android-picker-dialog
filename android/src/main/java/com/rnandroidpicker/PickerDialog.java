@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -36,10 +37,11 @@ public class PickerDialog extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 try {
+                    final Integer[] currentSelection = (Integer[]) Objects.requireNonNull(getArguments()).getSerializable("current values");
                     ArrayList<Integer> selectedValues = new ArrayList<Integer>();
                     Log.v("Dialog Picker ok", "array length is" + mInputLength);
                     LinearLayout pickerContainer = view.findViewById(R.id.picker_container);
-                    for(int index = 0; index < pickerContainer.getChildCount(); ++index) {
+                    for(int index = 0; index < Objects.requireNonNull(currentSelection).length; ++index) {
                         NumberPicker nextChild = (NumberPicker) pickerContainer.getChildAt(index);
                         int result = nextChild.getValue();
                         selectedValues.add(result);
@@ -73,6 +75,7 @@ public class PickerDialog extends DialogFragment {
         Integer[] ids = {R.id.custom_picker_1, R.id.custom_picker_2, R.id.custom_picker_3};
         LinearLayout pickerContainer = parentView.findViewById(R.id.picker_container);
         String[][] myInputs = (String[][]) Objects.requireNonNull(getArguments()).getSerializable("list");
+        String sideText = Objects.requireNonNull(getArguments()).getString("side text");
         mInputLength = Objects.requireNonNull(myInputs).length;
         Integer[] currentSelection = (Integer[]) Objects.requireNonNull(getArguments()).getSerializable("current values");
         for(int i = 0; i <= myInputs.length - 1; i++) {
@@ -81,7 +84,9 @@ public class PickerDialog extends DialogFragment {
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
             );
-            params.setMargins(0, 0, 20, 0);
+            if(i < 2 && myInputs.length > 1) {
+                params.setMargins(0, 0, 80, 0);
+            }
             picker.setId(ids[i]);
             picker.setMinValue(0);
             picker.setMaxValue(myInputs[i].length - 1);
@@ -89,8 +94,20 @@ public class PickerDialog extends DialogFragment {
             picker.setValue(Objects.requireNonNull(currentSelection)[i]);
             picker.setLayoutParams(params);
             picker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-            picker.setWrapSelectorWheel(false);
+            picker.setWrapSelectorWheel(true);
             pickerContainer.addView(picker);
+        }
+        if(myInputs.length == 1 && !Objects.equals(sideText, "")) {
+            TextView tv = new TextView(getActivity());
+            LinearLayout.LayoutParams tvParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            tvParams.setMargins(80, 0, 0, 0);
+            tv.setTextSize(20);
+            tv.setText(sideText);
+            tv.setLayoutParams(tvParams);
+            pickerContainer.addView(tv);
         }
         return parentView;
     }

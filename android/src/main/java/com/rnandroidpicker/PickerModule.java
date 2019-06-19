@@ -10,6 +10,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableNativeArray;
 
@@ -72,7 +73,7 @@ public class PickerModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void showDialog(ReadableArray inputs, ReadableArray selectedValues, String dialogTitle, Promise promise) {
+    public void showDialog(ReadableArray inputs, ReadableArray selectedValues, ReadableMap options, Promise promise) {
         if (pickerDialog != null
                 && pickerDialog.getDialog() != null
                 && pickerDialog.getDialog().isShowing()
@@ -97,7 +98,8 @@ public class PickerModule extends ReactContextBaseJavaModule {
                     "Inputs and selected array must be of the same size");
             return;
         }
-        String title = dialogTitle != null ? dialogTitle : "";
+        String title = options.getString("dialogTitle") != null ? options.getString("dialogTitle") : "";
+        String sideText = options.getString("sideText") != null ? options.getString("sideText") : "";
         String[][] inputValues = new String[inputs.size()][];
         Integer[] selectedIndex = new Integer[selectedValues.size()];
         try{
@@ -114,7 +116,7 @@ public class PickerModule extends ReactContextBaseJavaModule {
                 tempIntArr.add(selectedValues.getInt(j));
             }
             selectedIndex = tempIntArr.toArray(new Integer[selectedValues.size()]);
-            createDialog(inputValues, selectedIndex, title, promise);
+            createDialog(inputValues, selectedIndex, title, sideText, promise);
         } catch (Exception e) {
             Log.v("Error", e.getMessage());
         }
@@ -124,7 +126,7 @@ public class PickerModule extends ReactContextBaseJavaModule {
 
     }
 
-    private void createDialog(String[][] inputValues, Integer[] selectedIndex, String title, Promise promise) {
+    private void createDialog(String[][] inputValues, Integer[] selectedIndex, String title, String sideText, Promise promise) {
         FragmentActivity activity = (FragmentActivity) getCurrentActivity();
         if (activity == null) {
             promise.reject(
@@ -135,6 +137,7 @@ public class PickerModule extends ReactContextBaseJavaModule {
         FragmentManager fragmentManager = Objects.requireNonNull(activity).getSupportFragmentManager();
         Bundle bundle = new Bundle();
         try{
+            bundle.putString("side text", sideText);
             bundle.putSerializable("list", inputValues);
             bundle.putSerializable("current values", selectedIndex);
             bundle.putString("title", title);
