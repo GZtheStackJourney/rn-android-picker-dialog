@@ -3,7 +3,7 @@ import { NativeModules } from 'react-native';
 
 interface IOptions {
     dialogTitle: string,
-    sideText: string
+    sideText?: string
 }
 
 export const openDialog = async (inputs: string[][], selectedIndices: number[], options: IOptions) => {
